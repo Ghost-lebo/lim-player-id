@@ -7,11 +7,11 @@ PASSWORD = "Zorro123abc#@!"
 @app.route('/', methods=['GET'])
 def index():
     player_data = {
-        "name": "John Doe",
-        "dob": "2005-07-15",
-        "team": "Green Strikers FC",
+        "name": "John Malombo",
+        "dob": "2010-June-16",
+        "team": "Katlehong Young Pirate FC",
         "position": "Midfielder",
-        "tournament": "Youth Soccer League"
+        "tournament": "PRALS Winter Tournament"
     }
     return render_template("index.html", **player_data)
 
@@ -19,11 +19,11 @@ def index():
 def view_certificate():
     password = request.form.get("password")
     player_data = {
-        "name": "John Doe",
-        "dob": "2005-07-15",
-        "team": "Green Strikers FC",
+        "name": "John Malombo",
+        "dob": "2010-June-16",
+        "team": "Katlehong Young Pirate FC",
         "position": "Midfielder",
-        "tournament": "Youth Soccer League"
+        "tournament": "PRALS Winter Tournament"
     }
 
     if password == PASSWORD:
