@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>LIM – Player ID Card</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 30px;
+            background-color: #f0f0f0;
+        }
+        .card {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 650px;
+            margin: 0 auto;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        img {
+            width: 120px;
+            height: auto;
+            border-radius: 5px;
+        }
+        iframe {
+            width: 100%;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .password-form {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>Player ID Card</h1>
+        <img src="{{ url_for('static', filename='photo.jpg') }}" alt="Player Photo">
+        <p><strong>Name:</strong> {{ name }}</p>
+        <p><strong>Date of Birth:</strong> {{ dob }}</p>
+        <p><strong>Team:</strong> {{ team }}</p>
+        <p><strong>Position:</strong> {{ position }}</p>
+        <p><strong>Tournament:</strong> {{ tournament }}</p>
+
+        <h2>Birth Certificate</h2>
+
+        {% if show_certificate %}
+            <iframe src="{{ url_for('static', filename='birth_certificate.pdf') }}"></iframe>
+        {% else %}
+            <form method="POST" action="/view_certificate" class="password-form">
+                <input type="password" name="password" placeholder="Enter password" required>
+                <button type="submit">View Certificate</button>
+            </form>
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Birth Certificate Viewer</title>
+    <!-- Load PDF.js from jsDelivr CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/es5/build/pdf.min.js"></script>
+    <script>
+        // Set the workerSrc property to the correct path
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@2.6.347/es5/build/pdf.worker.min.js';
+    </script>
+    <style>
+        body { margin: 0; overflow: hidden; user-select: none; }
+        #viewerContainer { height: 100vh; width: 100vw; }
+        canvas { width: 100% !important; height: auto !important; }
+    </style>
+</head>
+<body>
+    <div id="viewerContainer">
+        <canvas id="pdf-canvas"></canvas>
+    </div>
+    <script>
+        document.addEventListener("contextmenu", event => event.preventDefault()); // Disable right-click
+
+        window.onload = function () {
+            const loadingTask = pdfjsLib.getDocument('/static/birth_certificate.pdf');
+            loadingTask.promise.then(pdf => {
+                pdf.getPage(1).then(page => {
+                    const scale = 1.5;
+                    const viewport = page.getViewport({ scale: scale });
+                    const canvas = document.getElementById('pdf-canvas');
+                    const context = canvas.getContext('2d');
+                    canvas.height = viewport.height;
+                    canvas.width = viewport.width;
+
+                    const renderContext = {
+                        canvasContext: context,
+                        viewport: viewport
+                    };
+                    page.render(renderContext);
+                });
+            });
+        }
+    </script>
+</body>
+</html>
+
